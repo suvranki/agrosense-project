@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgroSense – Farm Setup</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="bg-scene"></div>
+  <div class="bg-grid"></div>
+  <div class="particles" id="particles"></div>
+  <div id="toast-container"></div>
+
+  <div class="page-wrap">
+    <div class="container" style="max-width:520px">
+
+      <div class="logo-block" style="margin-bottom:20px">
+        <span class="logo-icon" style="font-size:40px">🌾</span>
+        <h1 class="logo-title" style="font-size:20px">FARM SETUP</h1>
+        <p class="logo-sub" id="farm-welcome">LET'S CONFIGURE YOUR FIELD</p>
+      </div>
+
+      <!-- Step bar -->
+      <div class="step-bar" id="step-bar">
+        <div class="step-item">
+          <div class="step-line done" id="sl-0"></div>
+          <div class="step-name active" id="sn-0">LOCATION</div>
+        </div>
+        <div class="step-item">
+          <div class="step-line" id="sl-1"></div>
+          <div class="step-name" id="sn-1">FIELD SIZE</div>
+        </div>
+        <div class="step-item">
+          <div class="step-line" id="sl-2"></div>
+          <div class="step-name" id="sn-2">CROP COUNT</div>
+        </div>
+        <div class="step-item">
+          <div class="step-line" id="sl-3"></div>
+          <div class="step-name" id="sn-3">SELECT CROPS</div>
+        </div>
+      </div>
+
+      <div class="card">
+
+        <!-- ── STEP 0: LOCATION ── -->
+        <div id="step-0">
+          <p class="section-title">WHERE IS YOUR FARM LOCATED?</p>
+
+          <div class="form-group">
+            <label class="form-label">City / Village *</label>
+            <input type="text" class="form-input" id="f-city" placeholder="e.g. Nagpur, Pune, Amravati" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">State *</label>
+            <select class="form-input" id="f-state">
+              <option value="">— Select State —</option>
+              <option>Andhra Pradesh</option><option>Assam</option>
+              <option>Bihar</option><option>Chhattisgarh</option>
+              <option>Gujarat</option><option>Haryana</option>
+              <option>Himachal Pradesh</option><option>Jharkhand</option>
+              <option>Karnataka</option><option>Kerala</option>
+              <option>Madhya Pradesh</option><option>Maharashtra</option>
+              <option>Manipur</option><option>Meghalaya</option>
+              <option>Odisha</option><option>Punjab</option>
+              <option>Rajasthan</option><option>Tamil Nadu</option>
+              <option>Telangana</option><option>Uttar Pradesh</option>
+              <option>Uttarakhand</option><option>West Bengal</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">District (optional)</label>
+            <input type="text" class="form-input" id="f-district" placeholder="e.g. Wardha" />
+          </div>
+
+          <button class="btn btn-primary" onclick="nextStep(0)">NEXT: FIELD SIZE →</button>
+        </div>
+
+        <!-- ── STEP 1: FIELD SIZE ── -->
+        <div id="step-1" class="hidden">
+          <p class="section-title">HOW BIG IS YOUR FIELD?</p>
+
+          <div class="form-group">
+            <label class="form-label">Total Field Area (Square Feet) *</label>
+            <input type="number" class="form-input" id="f-size" placeholder="e.g. 10000" min="100" />
+          </div>
+
+          <div class="quick-pills">
+            <button class="quick-pill" onclick="setFieldSize(2000)">2,000 sq.ft</button>
+            <button class="quick-pill" onclick="setFieldSize(5000)">5,000 sq.ft</button>
+            <button class="quick-pill" onclick="setFieldSize(10000)">10,000 sq.ft</button>
+            <button class="quick-pill" onclick="setFieldSize(25000)">25,000 sq.ft</button>
+            <button class="quick-pill" onclick="setFieldSize(50000)">50,000 sq.ft</button>
+            <button class="quick-pill" onclick="setFieldSize(100000)">1 Acre+</button>
+          </div>
+
+          <div class="form-group mt-16">
+            <label class="form-label">Soil Type</label>
+            <select class="form-input" id="f-soil">
+              <option value="loamy">Loamy (Best for most crops)</option>
+              <option value="clay">Clay (Good for rice, wheat)</option>
+              <option value="sandy">Sandy (Good for peanuts, potatoes)</option>
+              <option value="black">Black Cotton Soil</option>
+              <option value="red">Red Soil</option>
+            </select>
+          </div>
+
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-secondary" style="flex:1" onclick="prevStep(1)">← BACK</button>
+            <button class="btn btn-primary"   style="flex:2;margin-top:0" onclick="nextStep(1)">NEXT: CROP COUNT →</button>
+          </div>
+        </div>
+
+        <!-- ── STEP 2: CROP COUNT ── -->
+        <div id="step-2" class="hidden">
+          <p class="section-title">HOW MANY DIFFERENT CROPS?</p>
+          <p class="text-dim fs-12 mb-16" style="line-height:1.7">
+            You can grow 1 to 5 different crop types in the same field. Each crop will be monitored by a separate ESP32 sensor zone.
+          </p>
+
+          <div class="counter-wrap">
+            <button class="counter-btn" onclick="adjustCrops(-1)">−</button>
+            <div>
+              <div class="counter-val" id="crop-count-display">1</div>
+              <div class="counter-label">CROP TYPE<span id="crop-plural"></span></div>
+            </div>
+            <button class="counter-btn" onclick="adjustCrops(1)">+</button>
+          </div>
+
+          <div id="crop-count-info" style="background:var(--bg3);border-radius:12px;padding:14px;border:1px solid rgba(77,255,145,0.1);margin-bottom:20px;text-align:center">
+            <p class="text-green fs-12" style="font-family:var(--font-display);letter-spacing:1px" id="crop-count-msg">
+              Single crop monitoring — dedicated sensor zone
+            </p>
+          </div>
+
+          <div style="display:flex;gap:10px">
+            <button class="btn btn-secondary" style="flex:1" onclick="prevStep(2)">← BACK</button>
+            <button class="btn btn-primary"   style="flex:2;margin-top:0" onclick="nextStep(2)">SELECT MY CROPS →</button>
+          </div>
+        </div>
+
+        <!-- ── STEP 3: SELECT CROPS ── -->
+        <div id="step-3" class="hidden">
+          <p class="section-title">
+            SELECT <span class="text-green" id="select-count-label">1</span> CROP TYPE<span id="select-plural"></span>
+          </p>
+
+          <div class="crop-grid" id="crop-grid">
+            <!-- Populated by JS -->
+          </div>
+
+          <div id="selected-crops-info" style="margin-top:14px;padding:12px;background:var(--bg3);border-radius:10px;border:1px solid rgba(77,255,145,0.1);min-height:44px">
+            <p class="text-dim fs-12" style="font-family:var(--font-display);letter-spacing:1px" id="selection-status">
+              No crops selected yet
+            </p>
+          </div>
+
+          <div style="display:flex;gap:10px;margin-top:16px">
+            <button class="btn btn-secondary" style="flex:1" onclick="prevStep(3)">← BACK</button>
+            <button class="btn btn-primary"   style="flex:2;margin-top:0" id="launch-btn" onclick="launchDashboard()">
+              🚀 LAUNCH DASHBOARD
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /card -->
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>initParticles(); initFieldPage();</script>
+</body>
+</html>

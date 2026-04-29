@@ -1,0 +1,192 @@
+{
+  "users": [
+    {
+      "id": "demo-001",
+      "name": "Demo Farmer",
+      "age": 35,
+      "email": "demo@agrosense.in",
+      "gmail": "demo@gmail.com",
+      "phone": "+91 98765 43210",
+      "password": "$2a$10$demohashedpassword",
+      "lang": "en",
+      "gender": "Male",
+      "guest": false,
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    }
+  ],
+  "farms": [
+    {
+      "id": "farm-001",
+      "userId": "demo-001",
+      "city": "Nagpur",
+      "state": "Maharashtra",
+      "district": "Wardha",
+      "fieldSize": 10000,
+      "soilType": "black",
+      "cropCount": 2,
+      "crops": [
+        {
+          "id": "wheat",
+          "name": "Wheat",
+          "icon": "🌾",
+          "waterNeed": 450,
+          "growDays": 120
+        },
+        {
+          "id": "cotton",
+          "name": "Cotton",
+          "icon": "☁️",
+          "waterNeed": 700,
+          "growDays": 180
+        }
+      ],
+      "createdAt": "2025-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "e9d15f87-1837-4090-8e8d-6b8c49901fad",
+      "userId": 1774202987894,
+      "city": "cuttack",
+      "state": "Odisha",
+      "district": "",
+      "fieldSize": 5000,
+      "soilType": "loamy",
+      "cropCount": 1,
+      "crops": [
+        {
+          "id": "soybean",
+          "name": "Soybean",
+          "icon": "🫘",
+          "waterNeed": 450,
+          "growDays": 110
+        }
+      ],
+      "createdAt": "2026-03-22T18:10:14.727Z"
+    }
+  ],
+  "sensors": [
+    {
+      "nodeId": "ESP32-01",
+      "label": "Node 1 (Master)",
+      "role": "master",
+      "hasSensor": true,
+      "hasPump": false,
+      "zone": "Main Field",
+      "moisture": 42,
+      "temp": 27.5,
+      "battery": 92,
+      "signal": "strong",
+      "ip": "192.168.1.10",
+      "lastSeen": "2025-01-01T00:00:00.000Z",
+      "note": "Reads soil moisture. Connects to server via WiFi. Sends pump cmd to Node2 via ESP-NOW."
+    },
+    {
+      "nodeId": "ESP32-02",
+      "label": "Node 2 (Communicator)",
+      "role": "comm",
+      "hasSensor": false,
+      "hasPump": false,
+      "zone": "Relay Bridge",
+      "moisture": null,
+      "temp": null,
+      "battery": 88,
+      "signal": "strong",
+      "ip": "192.168.1.11",
+      "lastSeen": "2025-01-01T00:00:00.000Z",
+      "note": "ESP-NOW relay only. Bridges Node1 commands to Node3. No sensor, no pump."
+    },
+    {
+      "nodeId": "ESP32-03",
+      "label": "Node 3 (Pump Controller)",
+      "role": "pump",
+      "hasSensor": false,
+      "hasPump": true,
+      "zone": "Pump Station",
+      "moisture": null,
+      "temp": null,
+      "battery": 91,
+      "signal": "medium",
+      "ip": "192.168.1.12",
+      "lastSeen": "2025-01-01T00:00:00.000Z",
+      "note": "Controls water pump relay. No sensor. Receives ON/OFF from Node2 via ESP-NOW."
+    }
+  ],
+  "pumpLogs": [
+    {
+      "id": "log-001",
+      "nodeId": "ESP32-03",
+      "nodeIndex": 2,
+      "cropName": "Wheat",
+      "liters": 64,
+      "state": true,
+      "trigger": "Auto",
+      "auto": true,
+      "path": "N1 → N2 (relay) → N3 (pump)",
+      "timestamp": "2025-01-01T06:30:00.000Z"
+    }
+  ],
+  "moistureHistory": [
+    {
+      "date": "Mar 05",
+      "readings": [
+        42,
+        null,
+        null
+      ],
+      "pumpOn": true
+    },
+    {
+      "date": "Mar 06",
+      "readings": [
+        38,
+        null,
+        null
+      ],
+      "pumpOn": false
+    },
+    {
+      "date": "Mar 07",
+      "readings": [
+        22,
+        null,
+        null
+      ],
+      "pumpOn": true
+    },
+    {
+      "date": "Mar 08",
+      "readings": [
+        58,
+        null,
+        null
+      ],
+      "pumpOn": false
+    },
+    {
+      "date": "Mar 09",
+      "readings": [
+        45,
+        null,
+        null
+      ],
+      "pumpOn": false
+    },
+    {
+      "date": "Mar 10",
+      "readings": [
+        31,
+        null,
+        null
+      ],
+      "pumpOn": true
+    },
+    {
+      "date": "Mar 11",
+      "readings": [
+        23,
+        null,
+        null
+      ],
+      "pumpOn": true
+    }
+  ]
+}
